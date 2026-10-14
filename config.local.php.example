@@ -1,0 +1,21 @@
+<?php
+return [
+    'app_name' => 'Translate',
+
+    // Default login password in v1.2.0 is: Translate@63
+    // For production, generate a new hash with:
+    // php -r 'echo password_hash("YOUR-PASSWORD", PASSWORD_DEFAULT), PHP_EOL;'
+    // and paste the result below.
+    // 'login_password_hash' => '$2y$...',
+
+    // Optional. No key is needed for the built-in Google web-compatible and MyMemory fallbacks.
+    // 'libretranslate_url' => 'https://your-libretranslate.example/translate',
+    // 'libretranslate_key' => '',
+
+    // Optional Microsoft Translator / Azure AI Translator.
+    // 'microsoft_key' => '',
+    // 'microsoft_region' => 'uksouth',
+
+    // Translated MP3 is streamed to the device; it is never saved as a server media file.
+    'google_tts_enabled' => true,
+];
