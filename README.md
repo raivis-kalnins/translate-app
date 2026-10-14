@@ -112,7 +112,7 @@ Enhanced free voice selection: quality preference, male/female preference, warm/
 - Latvian browser voice is preferred over low-quality routed server TTS when normal stereo output is used.
 
 
-## v1.4.6 — High accuracy media transcription
+## v1.4.7 — High accuracy media transcription
 - Added a media recognition selector: **Fast browser speech recognition** or **High accuracy local Whisper**.
 - High accuracy mode runs `Xenova/whisper-base.en` in the user's browser/device and processes shared tab/system audio in ~12 second chunks before translating.
 - The Whisper model is downloaded by the browser on first use (roughly 100–200 MB depending on browser/model cache) and is not stored by the cPanel application.
@@ -122,10 +122,117 @@ Enhanced free voice selection: quality preference, male/female preference, warm/
 - Existing `storage/settings.json` is still not bundled, so hCaptcha settings are preserved during upgrades.
 
 
-## v1.4.6 performance fix
+## v1.4.7 performance fix
 - Switched local media transcription from Whisper base.en to quantized tiny.en.
 - Reduced segment duration to 8 seconds.
 - Added a hard bounded audio buffer and a single latest pending segment.
 - Drops/replaces stale waiting segments instead of allowing RAM growth.
 - Stops unnecessary screen video capture after tab-audio permission to reduce GPU/CPU usage.
 - Yields between inference jobs to keep UI/video responsive.
+
+
+## v1.4.7 tab-audio reliability
+- Whisper inference moved to a Web Worker to keep the page responsive.
+- Keeps Chrome display capture alive and transcribes an audio-only clone.
+- Adds real tab-audio signal detection before transcription.
+- Uses jsDelivr +esm for browser-safe Transformers loading.
+
+
+## v1.4.8
+- Latvian default voice preference changed to Female.
+- Automatic Latvian voice ranking strongly prefers Microsoft Everita / Online / Neural when exposed by Edge.
+- One-time migration clears an older saved Latvian voice choice so the new female default takes effect after update.
+
+## v1.5.0 performance update
+- YouTube captions/subtitles are now the first-choice transcription source when accessible.
+- Whisper no longer auto-loads for YouTube when captions are available.
+- Captions are cached server-side for up to 24 hours only, using the existing protected cache folder.
+- Whisper remains a manual fallback when captions are unavailable.
+- Service worker no longer intercepts authenticated navigation/API requests, avoiding the previous Failed to fetch loop.
+
+
+## v1.5.0 YouTube caption quality fixes
+- Adds YouTube subtitle/caption track selector when tracks are exposed by YouTube.
+- Filters non-speech cues such as [Music], [applause], [laughter] before accepting captions.
+- Rejects caption tracks that contain too little real spoken text instead of pretending transcription succeeded.
+- Clear recognition quality choices: YouTube captions, Whisper Tiny audio transcription, microphone fallback.
+- Existing storage/settings.json remains excluded from update ZIPs so hCaptcha settings are preserved.
+
+
+## v1.5.4
+- Split Live microphone and Audio / video into separate top navigation modes.
+- Live mode uses microphone only.
+- Media mode uses YouTube captions/tab audio/local files and stops Live microphone automatically.
+- Added clear workflow labels and explanations.
+
+
+## v1.5.4
+- Full-width Live microphone and Audio/video workflows.
+- Explicit From language -> To language selectors.
+- Dedicated YouTube subtitle load/translate button.
+- More robust YouTube caption track discovery and XML fallback.
+
+
+## v1.5.4
+- Long text translation is automatically chunked below free-provider limits.
+- Listen now prefers the exact same MP3/TTS path as MP3 export.
+- Quiet/TV microphone profile is less aggressive with noise suppression and echo cancellation.
+
+
+## v1.5.5
+- More robust free translation fallback: multiple Google web endpoints + mobile Google fallback.
+- 350-character safe chunks with retry/backoff for shared hosting.
+- Document translation uses smaller batches and cleaner provider outage handling.
+
+
+## v1.5.6
+- Default server text/caption cache increased to 7 days (configurable 1/3/7/14/30 days).
+- Optional Gemini Free AI fallback using a user-supplied Google AI Studio Free Tier key.
+- Higher-quality Gemini 3.8 Flash or lighter Gemini 3.5 Flash-Lite can be selected.
+- Audio/video files remain device-side; only text/caption/provider results are cached.
+
+
+## v1.5.7 reliability mode
+- Simple text translation is intentionally capped at 500 characters.
+- Documents, Live microphone transcripts and Media transcripts are split into <=430-byte chunks and translated sequentially.
+- If cPanel outbound translation calls fail, the browser falls back directly to free Google (when CORS permits) and then MyMemory.
+- MyMemory browser fallback avoids making the whole private app dependent on reseller-host outbound HTTP access.
+- Server provider failure enters a 5-minute cooldown so documents do not wait on the same dead endpoint for every chunk.
+- Audio/video files remain device-side; only recognized text is translated.
+
+
+## v1.5.9 audio controls and media defaults
+- Added shared TTS Play/Pause/Resume/Stop controls for text, document and live voice preview playback.
+- Long document listening now continues through all TTS chunks instead of forcing a page refresh to stop it.
+- YouTube loads with Browser-tab audio + Whisper Tiny as the default media path, with caption track left on Auto as an optional fast path.
+- Media mode continues to keep Live microphone capture mutually exclusive.
+- Existing hCaptcha/settings.json is not shipped in the update ZIP.
+
+
+## v1.6.0 media reliability
+- Chrome/Edge tab audio remains the default for YouTube/Spotify/podcasts.
+- If Free AI Assist is configured, short audio segments can be transcribed with Gemini audio first, with local Whisper Tiny fallback. Audio is forwarded in memory and is not saved by the app server.
+- Longer overlapping media windows and word-overlap merging improve continuous speech/song phrasing.
+- Local Whisper remains available when AI is unavailable or quota-limited.
+
+
+## v1.6.1
+- YouTube defaults are pinned to browser-tab audio + Whisper Tiny + caption Auto. Captions no longer switch recognition mode.
+- Longer 14s music-aware windows with 4s overlap and a vocal-focus WebAudio filter/compressor chain.
+- Gemini audio failure is cooled down for 5 minutes per session so it cannot slow every segment.
+- Larger safe transcription queue to reduce dropped song fragments.
+
+
+## v1.6.2
+- Faster 8s/2s-overlap media transcription windows.
+- Whisper-first transcription; Gemini audio only rescues weak fragments.
+- Larger protected media queue.
+- Media transcript TXT, bilingual translation TXT, source audio recording download, and translated MP3 download.
+
+## v1.6.3
+- Faster live media transcription: 5 second windows with 1.25 second overlap.
+- Visible live translated-text panel next to the transcript workflow.
+- Every recognized media chunk is translated through a serialized queue without blocking audio capture.
+- Optional automatic final accuracy pass after Stop: the device-side recording is decoded locally, re-transcribed in longer windows, compared with the live transcript, and used to fill missed speech.
+- Final pass then creates one complete translation for download/listening.
+- Manual "Complete from recording" button and preference saved locally.

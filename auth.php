@@ -10,7 +10,7 @@ function translate_config(): array {
 
 function translate_settings_path(): string { return __DIR__.'/storage/settings.json'; }
 function translate_settings(): array {
-    $defaults = ['hcaptcha_enabled'=>false,'hcaptcha_sitekey'=>'','hcaptcha_secret'=>''];
+    $defaults = ['hcaptcha_enabled'=>false,'hcaptcha_sitekey'=>'','hcaptcha_secret'=>'','cache_days'=>7,'free_ai_enabled'=>false,'gemini_api_key'=>'','gemini_model'=>'gemini-2.5-flash'];
     $path = translate_settings_path();
     if (!is_file($path)) return $defaults;
     $d = json_decode((string)@file_get_contents($path), true);
@@ -23,6 +23,10 @@ function translate_save_settings(array $settings): bool {
         'hcaptcha_enabled'=>(bool)($settings['hcaptcha_enabled']??false),
         'hcaptcha_sitekey'=>trim((string)($settings['hcaptcha_sitekey']??'')),
         'hcaptcha_secret'=>trim((string)($settings['hcaptcha_secret']??'')),
+        'cache_days'=>max(1,min(30,(int)($settings['cache_days']??7))),
+        'free_ai_enabled'=>(bool)($settings['free_ai_enabled']??false),
+        'gemini_api_key'=>trim((string)($settings['gemini_api_key']??'')),
+        'gemini_model'=>preg_replace('/[^A-Za-z0-9._-]/','',trim((string)($settings['gemini_model']??'gemini-2.5-flash'))) ?: 'gemini-2.5-flash',
     ];
     return @file_put_contents(translate_settings_path(), json_encode($data, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES), LOCK_EX) !== false;
 }
