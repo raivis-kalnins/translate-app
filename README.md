@@ -236,3 +236,9 @@ Enhanced free voice selection: quality preference, male/female preference, warm/
 - Optional automatic final accuracy pass after Stop: the device-side recording is decoded locally, re-transcribed in longer windows, compared with the live transcript, and used to fill missed speech.
 - Final pass then creates one complete translation for download/listening.
 - Manual "Complete from recording" button and preference saved locally.
+
+
+## v1.6.4
+- Recent translation history updates immediately without page reload.
+- Media translations are shown live in the history panel as soon as each fragment is translated.
+- History delete buttons work without forcing a full render while media capture is active.

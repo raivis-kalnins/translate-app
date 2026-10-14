@@ -8,7 +8,7 @@ header('Cache-Control: no-store, private');
 $config = translate_config();
 $settings = translate_settings();
 $appName = (string)($config['app_name'] ?? 'Translate');
-$version = '1.6.3';
+$version = '1.6.4';
 $error = '';
 if (isset($_GET['logout'])) { translate_logout(); header('Location: ./'); exit; }
 if (!translate_logged_in() && $_SERVER['REQUEST_METHOD']==='POST') {
