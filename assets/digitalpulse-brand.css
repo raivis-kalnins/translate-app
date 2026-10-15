@@ -1,0 +1,23 @@
+.dp-cta-block{box-sizing:border-box;width:min(1440px,calc(100% - 36px));margin:42px auto 24px;padding:2px;border-radius:24px;background:linear-gradient(115deg,#92d8ff,#b5b2ff 42%,#f6b6db 75%,#d7b3ff);box-shadow:0 14px 42px rgba(62,73,146,.12);color:#17233d;font-family:inherit}.dp-cta-inner{display:grid;grid-template-columns:minmax(260px,1fr) minmax(320px,1.15fr);gap:24px;align-items:center;padding:32px 38px;border-radius:22px;background:linear-gradient(115deg,rgba(255,255,255,.85),rgba(255,255,255,.53))}.dp-eyebrow{font-size:11px;letter-spacing:.17em;font-weight:800;color:#426e8a}.dp-cta-copy h2{font-size:clamp(24px,2.6vw,36px);line-height:1.13;margin:10px 0;color:#152343}.dp-cta-copy p{font-size:14px;line-height:1.7;margin:0 0 20px;color:#3c4964}.dp-action{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:13px 18px;background:linear-gradient(105deg,#213c9a,#7b48d8);color:white!important;text-decoration:none;font-weight:700;font-size:13px;box-shadow:0 7px 16px #3940a32e}.dp-services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.dp-service{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;min-height:108px;padding:12px 6px;border:1px solid rgba(255,255,255,.75);border-radius:15px;background:rgba(255,255,255,.6)}.dp-service span{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:linear-gradient(145deg,#e5f7ff,#e7dfff);font-size:24px;color:#4246a5}.dp-service strong{font-size:12px;color:#263653}.dp-credit{text-align:center;padding:12px;font-size:12px;color:var(--muted,#69778a)}.dp-credit a{color:inherit;text-decoration:underline}@media(max-width:760px){.dp-cta-block{width:calc(100% - 24px);margin:26px auto 14px}.dp-cta-inner{grid-template-columns:1fr;padding:23px 18px;gap:18px}.dp-services{gap:8px}.dp-service{min-height:92px}.dp-service strong{font-size:10px}}@media(max-width:390px){.dp-services{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Compact full-grid CTA, respecting each app's main content column */
+body:not(.login-body) .dp-cta-block{width:100%;max-width:1440px;margin:24px auto 12px;padding:1px;border-radius:18px}
+body:not(.login-body) .dp-cta-inner{padding:20px 22px;gap:18px;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}
+.dp-services{gap:8px}.dp-service{min-height:80px;padding:9px 5px;gap:5px}.dp-service span{height:32px;width:32px;font-size:20px}.dp-cta-copy h2{font-size:clamp(22px,2.1vw,30px)}
+.login-body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px 12px}.login-body .login-card{flex-shrink:0}.dp-login-footer{width:min(100%,1100px)}.login-body .dp-cta-block{width:100%;margin:12px auto 0}.login-body .dp-cta-inner{padding:20px 24px}.login-body .dp-credit{padding:10px}
+@media(max-width:760px){body:not(.login-body) .dp-cta-block{width:100%}body:not(.login-body) .dp-cta-inner,.login-body .dp-cta-inner{grid-template-columns:1fr;padding:18px 14px}.dp-services{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:390px){.dp-services{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* v4: compact login-only CTA, keep full app CTA unchanged */
+.login-body .dp-login-footer{width:min(100%,920px);max-width:920px}
+.login-body .dp-cta-block{width:100%;max-width:920px;margin:10px auto 0;border-radius:17px}
+.login-body .dp-cta-inner{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:14px;padding:16px 19px;border-radius:15px}
+.login-body .dp-cta-copy h2{font-size:clamp(19px,2vw,25px);margin:6px 0}
+.login-body .dp-cta-copy p{font-size:12px;line-height:1.5;margin-bottom:12px}
+.login-body .dp-eyebrow{font-size:9px}
+.login-body .dp-action{padding:9px 12px;font-size:11px}
+.login-body .dp-services{gap:6px}
+.login-body .dp-service{min-height:67px;padding:6px 4px;gap:3px;border-radius:10px}
+.login-body .dp-service span{height:27px;width:27px;font-size:17px}
+.login-body .dp-service strong{font-size:10px}
+.dp-logout{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;color:inherit}
+@media(max-width:760px){.login-body .dp-cta-inner{grid-template-columns:1fr;padding:15px}.login-body .dp-login-footer{width:100%}}
